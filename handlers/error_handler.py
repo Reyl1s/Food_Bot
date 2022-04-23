@@ -2,12 +2,13 @@ import sys
 import traceback
 import vars
 
-from bot import config
+from config import get_config
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 from telegram.utils.helpers import mention_html
 
-def error(update: Update, context: CallbackContext):
+def error_command(update: Update, context: CallbackContext):
+    config = get_config()
     devs = [config['ROOT_CHAT_ID']]
 
     if update.effective_message:
