@@ -9,4 +9,4 @@ def start_command(update: Update, context: CallbackContext):
     if user_is_created:
         update.effective_message.reply_text('User is created')
     else:
-        update.effective_message.reply_text('Сначала нужно зарегестрироваться. Введите команду /register')
+        update.effective_message.reply_text('Сначала нужно зарегестрироваться.\nВведите команду /register name (например /register Амир)')

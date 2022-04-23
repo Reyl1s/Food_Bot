@@ -8,8 +8,13 @@ def register_command(update: Update):
     if user_is_created:
         update.effective_message.reply_text('Вы уже зарегестрированы')
     else:
-        create_user(user_id, update.effective_user.username)
-        update.effective_message.reply_text('Вы успешно зарегестрировались')
+        user_name = update.message.text.replace('/register', '').strip()
+
+        if user_name is '':
+            update.effective_message.reply_text('Введите /register name (например /register Амир)')
+        else:
+            create_user(user_id, update.effective_user.username, user_name)
+            update.effective_message.reply_text('Вы успешно зарегестрировались')
     
 def delete_command(update: Update):
     delete_user(update.effective_user.id)

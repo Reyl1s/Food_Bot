@@ -24,7 +24,7 @@ def close_conn():
     if(conn):
         conn.close()
 
-def create_user(user_id: int, nickname: str):
+def create_user(user_id: int, nickname: str, name: str):
     if (cursor):
         user_is_deleted = check_user_is_deleted(user_id)
 
@@ -32,7 +32,7 @@ def create_user(user_id: int, nickname: str):
             cursor.execute('UPDATE `Users` SET `Is_Deleted` = false WHERE `User_Id` = ?', (user_id,))
             conn.commit()
         else:
-            cursor.execute('INSERT OR IGNORE INTO `Users` (`User_Id`, `Nickname`) VALUES (?,?)', (user_id, nickname))
+            cursor.execute('INSERT OR IGNORE INTO `Users` (`User_Id`, `Nickname`, `Name`) VALUES (?,?,?)', (user_id, nickname, name))
             conn.commit()
 
 def get_users():
