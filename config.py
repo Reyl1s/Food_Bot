@@ -1,15 +1,19 @@
 import os
 from dotenv import load_dotenv, dotenv_values
 
-config = None
+class Config:
+    data = []
 
-def init_config():
-    global config
+    def __init__(self):
+        self.data = self.get_config()
+
+    def get_config(_):
+        dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+        if os.path.exists(dotenv_path):
+            load_dotenv(dotenv_path)
+            config = dotenv_values(".env")
+
+            return config
+        return None
+
     
-    dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-    if os.path.exists(dotenv_path):
-        load_dotenv(dotenv_path)
-        config = dotenv_values(".env")
-
-def get_config():
-    return config

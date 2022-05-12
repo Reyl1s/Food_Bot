@@ -2,20 +2,20 @@ import sys
 import traceback
 import vars
 
-from config import get_config
+from config import Config
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 from telegram.utils.helpers import mention_html
 
-def error_command(update: Update, context: CallbackContext):
-    config = get_config()
-    devs = [config['ROOT_CHAT_ID']]
+def error_handler(update: Update, context: CallbackContext):
+    config = Config()
+    devs = [config.data['ROOT_CHAT_ID']]
 
     if update.effective_message:
         text = vars.user_error_message
         update.effective_message.reply_text(text)
     
-    trace = "".join(traceback.format_tb(sys.exc_info()[2]))
+    trace = ''.join(traceback.format_tb(sys.exc_info()[2]))
     payload = []
     
     # user
@@ -35,7 +35,7 @@ def error_command(update: Update, context: CallbackContext):
     
     text = f"Ошибка <code>{context.error}</code> случилась{''.join(payload)}. " \
         f"Полная трассировка:\n\n<code>{trace}</code>" \
-            "\n#error"
+        "\n#error"
     
     for dev_id in devs:
         context.bot.send_message(dev_id, text, parse_mode=ParseMode.HTML)
